@@ -2,16 +2,33 @@ const express = require("express");
 
 const app = express();
 
-app.get('/' , (req , res)=>{
-    res.send("dasbord page....");
+
+
+// app.use('/home' , (req , res)=>{
+//     res.send("Home page....");
+// });
+
+// app.use('/test' , (req , res)=>{
+//     res.send("Test ..");
+// });
+
+// app.use('/' , (req , res)=>{
+//     res.send("Home page....");
+// });
+
+app.get("/user" , (req , res)=>{
+    console.log(req.query);
+    res.send({FirstName : "Shashikant" , LastName : "Yadav"});
 });
 
-app.get('/home' , (req , res)=>{
-    res.send("Home page....");
+app.post("/user" , (req , res)=>{
+    res.send("Data saveed.");
 });
 
-app.get('/test' , (req , res)=>{
-    res.send("Testing pageasdfgh ..");
-});
+app.delete("/user" , (req , res)=>{
+    res.send("Deleted ");
+})
+
+
 
 app.listen(7777)

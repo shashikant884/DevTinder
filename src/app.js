@@ -4,30 +4,26 @@ const app = express();
 
 
 
-// app.use('/home' , (req , res)=>{
-//     res.send("Home page....");
-// });
 
-// app.use('/test' , (req , res)=>{
-//     res.send("Test ..");
-// });
 
-// app.use('/' , (req , res)=>{
-//     res.send("Home page....");
-// });
 
-app.get("/user" , (req , res)=>{
-    console.log(req.query);
-    res.send({FirstName : "Shashikant" , LastName : "Yadav"});
-});
+app.get("/user" , (req , res , next)=>{
+    console.log("Handling the route 1");
+    // res.send("respons 1");
+    next();
+},
 
-app.post("/user" , (req , res)=>{
-    res.send("Data saveed.");
-});
-
-app.delete("/user" , (req , res)=>{
-    res.send("Deleted ");
-})
+(req , res , next)=>{
+    console.log("Handling the route 2");
+    // res.send("response 2");
+    next();
+},
+(req , res , next)=>{
+    console.log("Handling the route 3");
+    res.send("response 3");
+    next();
+}
+);
 
 
 

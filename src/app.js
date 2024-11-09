@@ -1,30 +1,21 @@
 const express = require("express");
+const {adminAuth , userAuth} = require("./middlewares/auth");
 
 const app = express();
 
+app.use("/admin" ,adminAuth)
 
+app.get("/user" , userAuth , (req, res )=>{
+    res.send("User data send");
+});
 
-
-
-
-app.get("/user" , (req , res , next)=>{
-    console.log("Handling the route 1");
-    // res.send("respons 1");
-    next();
-},
-
-(req , res , next)=>{
-    console.log("Handling the route 2");
-    // res.send("response 2");
-    next();
-},
-(req , res , next)=>{
-    console.log("Handling the route 3");
-    res.send("response 3");
-    next();
-}
+app.get("/admin/getAllData" , (req , res)=>{
+    res.send("All data send");
+    }
 );
-
-
+app.get("/admin/delete" , (req , res)=>{
+    res.send("All data deleted");
+    }
+);
 
 app.listen(7777)

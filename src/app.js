@@ -22,6 +22,32 @@ app.post("/signup" , async (req , res)=>{
     }
 } );
 
+app.get("/user" , async(req , res)=>{
+    const userEmail = req.body.emailId;
+
+    try{
+        console.log(userEmail);
+        const user = await User.findOne({emailId : userEmail});
+
+        if(!user){
+            res.status(404).send("User not found");
+        }else{
+            res.send(user);
+        }
+    }catch{
+        res.status(400).send("Error saveing the user");
+    }
+});
+
+app.get("/feed" , async(req , res)=>{
+    try{
+        const user = await User.find({});
+        res.send(user);
+        console.log(user);
+    }catch{
+        res.status(400).send("Some think went wrong");
+    }
+})
 
 connectDB().then(()=>{
     console.log("Database Connection established ....... ");

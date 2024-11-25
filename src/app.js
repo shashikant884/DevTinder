@@ -4,10 +4,11 @@ const app = express();
 const User = require("./models/user");
 
 
+
 app.use(express.json());
 app.post("/signup" , async (req , res)=>{
     const user = new User(req.body);
-    console.log(req.body);
+    // console.log(req.body);
     // const user = new User({
     //     firstName : "Rohit",
     //     lastName : "Sharma",
@@ -17,8 +18,8 @@ app.post("/signup" , async (req , res)=>{
     try{
         await user.save();
         res.send("User add successfully");
-    }catch{
-        res.status(400).send("Error saveing the user");
+    }catch(err){
+        res.status(400).send("Error saveing the user" + err);
     }
 } );
 
@@ -47,7 +48,35 @@ app.get("/feed" , async(req , res)=>{
     }catch{
         res.status(400).send("Some think went wrong");
     }
-})
+});
+
+app.delete("/user" , async(req , res)=>{
+    const userId = req.body.userId;
+    console.log(userId);
+        try{
+            const user = await User.findByIdAndDelete(userId);
+            res.send("User Deleted successfully");
+        }catch(err){
+                res.status(400).send("Some think went wrong");
+       }   
+});
+
+app.patch("/user" , async(req , res)=>{
+    const userId = req.body.userId;
+    const data = req.body;
+    try{
+        const user = await User.findByIdAndUpdate({_id: userId} , data , {
+            returnDocument : "after",
+            runValidators : true
+        });
+        console.log(user);
+        res.send("User update successfully"); 
+
+    }catch(err){
+        // res.status(400).send("somethink went wrong");
+        res.status(400).send("Update failed" + err);
+    }
+});
 
 connectDB().then(()=>{
     console.log("Database Connection established ....... ");

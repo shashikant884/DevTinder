@@ -1,5 +1,5 @@
 const validator = require("validator");
-const { all } = require("../routes/auth");
+// const { all } = require("../routes/auth");
 
 const validateSignUpData = (req) => {
   const { firstName, lastName, emailId, password } = req.body;
